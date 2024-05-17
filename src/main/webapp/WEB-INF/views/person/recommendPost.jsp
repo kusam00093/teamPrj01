@@ -6,12 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>이력서 상세보기</title>
-<link rel="icon" type="image/png" href="/img/favicon.png" />
-<link href="/css/start.css" rel="stylesheet" />
-<link href="/css/test.css" rel="stylesheet" />
+<link rel="stylesheet" href="/css/common.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<link rel="stylesheet" href="/css/common.css" />
 
 </head>
 	<%@include file="/WEB-INF/include/header.jsp" %>
@@ -19,11 +17,15 @@
 
 <body>
 	<div class="recommendPost">
-		<section>
-			<h2>${vo.title}</h2>
-		</section>
+	<div>&nbsp;</div>
 		 <div class="container">
+		<div>
+			<h2>${vo.title}</h2>
+		</div>
      <h2>추천 공고 목록</h2>
+	<div>&nbsp;</div>
+	<div>&nbsp;</div>
+	<div>&nbsp;</div>
      
         <div id="recommend">
          <table class="table">
@@ -49,23 +51,15 @@
 			
 	</div>
 	
-	
-	<button class="btn btn-primary" id="goUpdate">수정하기</button>
+	</div>
+	</div>
 
 
 	
 	
 	<%@include file="/WEB-INF/include/footer.jsp" %>
 
-<script> 
-	const goUpdateEl = document.querySelector('#goUpdate')
-	goUpdateEl.addEventListener('click',()=>{
-		location.href='/Resume/UpdateForm?resume_idx=${vo.resume_idx}';
-	
-	})
-	
-	
-</script>
+
 
 </body>
 

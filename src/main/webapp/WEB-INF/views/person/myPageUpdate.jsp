@@ -9,34 +9,39 @@
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 <link href="/css/start.css" rel="stylesheet" />
 <link href="/css/test.css" rel="stylesheet" />
+
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <link rel="stylesheet" href="/css/common.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<style>
+	.title{
+		text-align: center;
+	}
+	#goDelete{
+		float : right;
+	}
+	#goUpdate{
+		float : right;
+		
+	}
 
+</style>
 </head>
 	<%@include file="/WEB-INF/include/header.jsp" %>
 	<%@include file="/WEB-INF/include/nav.jsp" %>
 
 <body>
 	<div class="person">
+	<div class="container">
 		<section>
 
 	<form action="/MyPageUpdate" method="POST">
 	
-	<h2>개인정보 수정</h2>
+	<h2 class="title">개인정보 수정</h2>
 					<section>
 				<div class="mt-5 ms-3">
-					<div class="row">
-						<div class="my-1 mx-auto row">
-							<div class="col-10">
-								<h2 class="fw-semibold">
-									<input type="text" class="border-0 w-100" id="title">
-								</h2>
-							</div>
-
-						</div>
-
-					</div>
 					<hr>
 					<div class="my-1 mx-auto row">
 
@@ -50,7 +55,15 @@
 								</div>
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="ppwd">비밀번호</span>
-									 <input	type="password" class="form-control" id="pwd" name="pwd" >
+									 <input	type="password" class="form-control" id="pw1" name="pwd" value="${ vo.pwd }">
+								</div>
+								<div class="input-group mb-3">
+									<span class="input-group-text" id="ppwd">비밀번호확인</span>
+									 <input	type="password" class="form-control" id="pw2"  placeholder="비밀번호를 다시 입력해주세요">
+								</div>
+
+								<div>
+								<label id="pwck"></label>
 								</div>
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="pphone">연락처</span>
@@ -58,23 +71,24 @@
 								</div>
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="user_email">이메일</span> 
-									<input	type="email" class="form-control" id="user_email" value="">
+									<input	type="email" class="form-control" id="user_email" name="email" value="${ vo.email }">
 								</div>
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="zip_code">우편번호</span> 
-									<input	type="text" class="form-control" id="sample6_postcode" name="zip_code"  placeholder="우편번호">
+									<input	type="text" class="form-control zipe_code" id="sample6_postcode" name="zip_code"  placeholder="우편번호">
+									<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="zip_code" class="btn btn-primary input-group-text" style="border-radius: 0 0.25rem 0.25rem 0;" ><br>
 								</div>
+<!-- 								<div class="input-group mb-3"> -->
+<!-- 								    <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="zip_code" class="btn btn-primary" ><br> -->
+<!-- 								</div> -->
 								<div class="input-group mb-3">
-								    <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="zip_code" name="zip_code" placeholder="" ><br>
-								</div>
-								<div class="input-group mb-3">
-						            <label for="address">주소</label>
-						            <input type="text" class="form-control"  id="sample6_address" name="address1" placeholder="주소">
-						            <input type="text" class="form-control"  id="sample6_detailAddress" name="address2" placeholder="상세주소">
-                                    <input type="text" class="form-control"  id="sample6_extraAddress" name="address3" placeholder="참고항목">
-						            <input type="text" name="address">
-						            <div class="invalid-feedback">
+						        	<span class="input-group-text" id="address1">주소</span>
+						            <input type="text" class="form-control"  id="sample6_address" name="address" placeholder="주소">
 						        </div>
+								<div class="input-group mb-3">
+									<span class="input-group-text" id="address2">상세주소</span> 
+						            <input type="text" class="form-control"  id="sample6_detailAddress" name="address2" placeholder="상세주소">
+								</div>
 
 
 					</div>
@@ -86,7 +100,7 @@
 	</form>
 					<button type="button" class="btn btn-danger" id="goDelete">회원탈퇴</button>
 	</section>
-			
+			</div>
 	</div>
 	
 
@@ -123,51 +137,39 @@
                         extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                     }
                     // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
+                    //if(extraAddr !== ''){
+                       // extraAddr = ' (' + extraAddr + ')';
+                    //}
                     // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                   // document.getElementById("sample6_extraAddress").value = extraAddr;
                 
                 } else {
-                    document.getElementById("sample6_extraAddress").value = '';
+                   // document.getElementById("sample6_extraAddress").value = '';
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('sample6_postcode').value = data.zonecode;
                 document.getElementById("sample6_address").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
+                //document.getElementById("sample6_detailAddress").focus();
             }
         }).open();
     }
 </script> 
 <script>
-// 주소 입력 필드 요소 가져오기
-const address1Input = document.getElementById('sample6_address');
-const address2Input = document.getElementById('sample6_detailAddress');
-const address3Input = document.getElementById('sample6_extraAddress');
-
-// 실시간으로 address 필드에 주소를 업데이트하는 함수
-function updateAddressField() {
-    // 각 주소 입력 필드에서 값을 가져오기
-    const address1 = address1Input.value.trim();
-    const address2 = address2Input.value.trim();
-    const address3 = address3Input.value.trim();
-
-    // 주소 합치기
-    const fullAddress = `${address1} ${address2} ${address3}`;
-
-    // address 필드에 실시간으로 업데이트
-    const addressField = document.querySelector('input[name="address"]');
-    addressField.value = fullAddress;
-}
-
-// 각 주소 입력 필드에 input 이벤트 리스너 추가
-address1Input.addEventListener('input', updateAddressField);
-address2Input.addEventListener('input', updateAddressField);
-address3Input.addEventListener('input', updateAddressField);
+	$('#pw2').on('keyup', function pwCheck() {
+	    var pw1 = $('#pw1').val();
+	    var pw2 = $('#pw2').val();
+	
+	    if (pw1 == pw2) {
+	       $('#pwck').html('비밀번호 일치').css('color', 'blue')
+	    } else {
+	       $('#pwck').html('비밀번호 불일치').css('color', 'red')
+	    }
+	 })
 </script>
+
+
 	
 	
 <script>
@@ -177,7 +179,7 @@ address3Input.addEventListener('input', updateAddressField);
 	})
 	const goDeleteEl = document.querySelector('#goDelete')
 	goDeleteEl.addEventListener('click', ()=>{
-		
+		// user_idx 선언 후 삽입해야함
 		location.href='/PersonDelete';
 		alert('탈퇴처리 되었습니다');
 		
